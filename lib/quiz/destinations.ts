@@ -28,7 +28,7 @@ export type GoogleSheetsLead = {
   objetivo: string
   alimentacionActual: string
   planAlimentacion: string
-  ejercicio: string
+  entrenamiento: string
   principalDificultad: string
   freno: string
   resultadoDeseado: string
@@ -62,7 +62,7 @@ export function toGoogleSheetsLead(
     planAlimentacion: lead.answer_4 ?? '',
 
     // 5. Ejercicio actual
-    ejercicio: lead.answer_5 ?? '',
+   entrenamiento: lead.answer_5 ?? '',
 
     // 6. Principal dificultad
     principalDificultad: lead.answer_6 ?? '',
