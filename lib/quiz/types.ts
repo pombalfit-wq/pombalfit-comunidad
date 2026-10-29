@@ -6,7 +6,16 @@ export type QuizOption = {
 export type QuizQuestion = {
   id: string
   title: string
-  options: QuizOption[]
+
+  // Por defecto la pregunta será de opciones.
+  // "text" permite respuestas abiertas.
+  type?: 'options' | 'text'
+
+  // Solo es obligatorio para las preguntas de opciones.
+  options?: QuizOption[]
+
+  // Texto orientativo para las preguntas abiertas.
+  placeholder?: string
 }
 
 export type QuizLink = {
@@ -17,13 +26,11 @@ export type QuizLink = {
 
 /**
  * Everything that makes a quiz unique lives in a QuizConfig.
- * To create a new quiz (e.g. "Rutinas PombalFit"), duplicate a file in
- * lib/quiz/configs and render <QuizApp config={...} /> from a new route.
- * Keep it serializable (no functions) so it can be passed from Server Components.
  */
 export type QuizConfig = {
   id: string
   brand: string
+
   welcome: {
     title: string
     headline: string
@@ -31,7 +38,9 @@ export type QuizConfig = {
     cta: string
     highlights: string[]
   }
+
   questions: QuizQuestion[]
+
   leadForm: {
     title: string
     description: string
@@ -39,11 +48,13 @@ export type QuizConfig = {
     privacyConsentLabel: string
     privacyPolicy: QuizLink
   }
+
   result: {
     /** Use {name} as a placeholder for the user's first name. */
     title: string
     description: string
     primaryCta: QuizLink
+
     upsell: {
       title: string
       paragraphs: string[]
@@ -79,11 +90,20 @@ export type LeadPayload = LeadContact &
   UtmParams & {
     quizId: string
     registeredAt: string
-   answer_1: string | null
-answer_2: string | null
-answer_3: string | null
-answer_4: string | null
-answer_5: string | null
-answers: LeadAnswer[]
+
+    answer_1: string | null
+    answer_2: string | null
+    answer_3: string | null
+    answer_4: string | null
+    answer_5: string | null
+    answer_6: string | null
+    answer_7: string | null
+    answer_8: string | null
+    answer_9: string | null
+    answer_10: string | null
+    answer_11: string | null
+    answer_12: string | null
+
+    answers: LeadAnswer[]
     pageUrl: string | null
   }
