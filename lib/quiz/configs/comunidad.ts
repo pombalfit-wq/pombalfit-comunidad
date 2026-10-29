@@ -30,16 +30,8 @@ export const recetasQuiz: QuizConfig = {
     },
 
     {
-      id: 'cambio_deseado',
-      title: 'Ahora mismo, ¿qué es lo que más te gustaría conseguir?',
-      type: 'text',
-      placeholder:
-        'Por ejemplo: perder peso, sentirme más fuerte, ganar músculo, tener más energía, volver a sentirme bien con mi cuerpo...',
-    },
-
-    {
       id: 'objetivo',
-      title: 'Si tuvieras que elegir tu principal objetivo, ¿cuál sería?',
+    title: '¿Cuál es tu principal objetivo en este momento?',
       options: [
         { value: 'perder_grasa', label: 'Perder grasa' },
         { value: 'tonificar', label: 'Tonificar y ganar músculo' },
