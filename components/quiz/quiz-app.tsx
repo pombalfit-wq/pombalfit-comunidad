@@ -14,14 +14,6 @@ const AUTO_ADVANCE_DELAY_MS = 280
 
 type Direction = 'forward' | 'back'
 
-/**
- * Step layout:
- * 0 = welcome
- * 1..n = questions
- * n + 1 = lead form
- * n + 2 = WhatsApp community
- * n + 3 = result
- */
 export function QuizApp({ config }: { config: QuizConfig }) {
   const totalQuestions = config.questions.length
   const leadStep = totalQuestions + 1
@@ -70,13 +62,19 @@ export function QuizApp({ config }: { config: QuizConfig }) {
     }
   }
 
-  const selectAnswer = (questionId: string, value: string) => {
-    if (advanceTimer.current) return
-
+  const selectAnswer = (
+    questionId: string,
+    value: string,
+    autoAdvance = true,
+  ) => {
     setAnswers((prev) => ({
       ...prev,
       [questionId]: value,
     }))
+
+    if (!autoAdvance) return
+
+    if (advanceTimer.current) return
 
     advanceTimer.current = setTimeout(() => {
       advanceTimer.current = null
@@ -89,6 +87,20 @@ export function QuizApp({ config }: { config: QuizConfig }) {
   const question = isQuestion
     ? config.questions[step - 1]
     : null
+
+  const isTextQuestion = question?.type === 'text'
+
+  const currentTextAnswer = question
+    ? answers[question.id] ?? ''
+    : ''
+
+  const continueTextQuestion = () => {
+    if (!question) return
+
+    if (!currentTextAnswer.trim()) return
+
+    goTo(step + 1, 'forward')
+  }
 
   const progress =
     step === 0
@@ -139,14 +151,35 @@ export function QuizApp({ config }: { config: QuizConfig }) {
           )}
 
           {question && (
-            <QuizQuestionScreen
-              question={question}
-              selectedValue={answers[question.id]}
-              onSelect={(value) =>
-                selectAnswer(question.id, value)
-              }
-              autoFocusHeading={hasStarted}
-            />
+            <>
+              <QuizQuestionScreen
+                question={question}
+                selectedValue={answers[question.id]}
+                onSelect={(value) =>
+                  selectAnswer(
+                    question.id,
+                    value,
+                    question.type !== 'text',
+                  )
+                }
+                autoFocusHeading={hasStarted}
+              />
+
+              {isTextQuestion && (
+                <button
+                  type="button"
+                  onClick={continueTextQuestion}
+                  disabled={!currentTextAnswer.trim()}
+                  className={cn(
+                    'mt-6 w-full rounded-2xl bg-primary px-6 py-4 text-base font-bold text-primary-foreground transition-all',
+                    'hover:opacity-90 active:scale-[0.99]',
+                    'disabled:cursor-not-allowed disabled:opacity-40',
+                  )}
+                >
+                  CONTINUAR
+                </button>
+              )}
+            </>
           )}
 
           {step === leadStep && (
