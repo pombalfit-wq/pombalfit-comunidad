@@ -52,38 +52,38 @@ export function toGoogleSheetsLead(
     // 1. Edad
     edad: lead.answer_1 ?? '',
 
-    // 2. Qué le gustaría conseguir (respuesta abierta)
-    cambioDeseado: lead.answer_2 ?? '',
+    // 2. Objetivo principal
+    objetivo: lead.answer_2 ?? '',
 
-    // 3. Objetivo principal
-    objetivo: lead.answer_3 ?? '',
+    // 3. Alimentación actual
+    alimentacionActual: lead.answer_3 ?? '',
 
-    // 4. Cómo está cuidando su alimentación
-    alimentacionActual: lead.answer_4 ?? '',
+    // 4. Plan de alimentación actual
+    planAlimentacion: lead.answer_4 ?? '',
 
-    // 5. Si sigue un plan de alimentación
-    planAlimentacion: lead.answer_5 ?? '',
+    // 5. Ejercicio actual
+    ejercicio: lead.answer_5 ?? '',
 
-    // 6. Ejercicio actual
-    ejercicio: lead.answer_6 ?? '',
+    // 6. Principal dificultad
+    principalDificultad: lead.answer_6 ?? '',
 
-    // 7. Principal dificultad
-    principalDificultad: lead.answer_7 ?? '',
+    // 7. Qué le está frenando
+    freno: lead.answer_7 ?? '',
 
-    // 8. Qué cree que le está frenando (respuesta abierta)
-    freno: lead.answer_8 ?? '',
+    // 8. Resultado concreto que quiere conseguir
+    resultadoDeseado: lead.answer_8 ?? '',
 
-    // 9. Cambio concreto que quiere conseguir (respuesta abierta)
-    resultadoDeseado: lead.answer_9 ?? '',
+    // 9. Cuándo quiere empezar
+    cuando: lead.answer_9 ?? '',
 
-    // 10. Cuándo quiere empezar
-    cuando: lead.answer_10 ?? '',
+    // 10. Qué ayuda necesita
+    ayuda: lead.answer_10 ?? '',
 
-    // 11. Qué ayuda cree que necesita
-    ayuda: lead.answer_11 ?? '',
+    // 11. Si quiere que contactemos
+    contacto: lead.answer_11 ?? '',
 
-    // 12. Si quiere que contactemos con ella
-    contacto: lead.answer_12 ?? '',
+    // Ya no utilizamos "Cambio deseado"
+    cambioDeseado: '',
 
     origen: lead.utm_source || 'Directo',
     campana: lead.utm_campaign || defaultCampaign,
