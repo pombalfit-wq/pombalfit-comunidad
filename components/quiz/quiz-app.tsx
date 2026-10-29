@@ -6,7 +6,6 @@ import { QuizHeader } from './quiz-header'
 import { QuizWelcome } from './quiz-welcome'
 import { QuizQuestionScreen } from './quiz-question'
 import { QuizLeadForm } from './quiz-lead-form'
-import { QuizWhatsapp } from './quiz-whatsapp'
 import { QuizResult } from './quiz-result'
 import { cn } from '@/lib/utils'
 
@@ -17,8 +16,7 @@ type Direction = 'forward' | 'back'
 export function QuizApp({ config }: { config: QuizConfig }) {
   const totalQuestions = config.questions.length
   const leadStep = totalQuestions + 1
-  const whatsappStep = totalQuestions + 2
-  const resultStep = totalQuestions + 3
+  const resultStep = totalQuestions + 2
 
   const [step, setStep] = useState(0)
   const [direction, setDirection] = useState<Direction>('forward')
@@ -35,7 +33,9 @@ export function QuizApp({ config }: { config: QuizConfig }) {
 
   useEffect(
     () => () => {
-      if (advanceTimer.current) clearTimeout(advanceTimer.current)
+      if (advanceTimer.current) {
+        clearTimeout(advanceTimer.current)
+      }
     },
     [],
   )
@@ -72,8 +72,10 @@ export function QuizApp({ config }: { config: QuizConfig }) {
       [questionId]: value,
     }))
 
+    // Las preguntas abiertas NO avanzan automáticamente.
     if (!autoAdvance) return
 
+    // Las preguntas de opciones sí avanzan automáticamente.
     if (advanceTimer.current) return
 
     advanceTimer.current = setTimeout(() => {
@@ -97,6 +99,7 @@ export function QuizApp({ config }: { config: QuizConfig }) {
   const continueTextQuestion = () => {
     if (!question) return
 
+    // No permite continuar si la respuesta está vacía.
     if (!currentTextAnswer.trim()) return
 
     goTo(step + 1, 'forward')
@@ -107,7 +110,7 @@ export function QuizApp({ config }: { config: QuizConfig }) {
       ? 0
       : step >= resultStep
         ? 1
-        : step / (totalQuestions + 2)
+        : step / (totalQuestions + 1)
 
   return (
     <div className="relative flex min-h-dvh flex-col overflow-x-hidden bg-gradient-to-b from-secondary via-background to-background">
@@ -127,9 +130,7 @@ export function QuizApp({ config }: { config: QuizConfig }) {
             ? `Pregunta ${step} de ${totalQuestions}`
             : step === leadStep
               ? 'Tus datos'
-              : step === whatsappStep
-                ? 'Último paso'
-                : null
+              : null
         }
       />
 
@@ -191,14 +192,6 @@ export function QuizApp({ config }: { config: QuizConfig }) {
               privacyAccepted={privacyAccepted}
               onPrivacyChange={setPrivacyAccepted}
               onSubmitted={() =>
-                goTo(whatsappStep, 'forward')
-              }
-            />
-          )}
-
-          {step === whatsappStep && (
-            <QuizWhatsapp
-              onContinue={() =>
                 goTo(resultStep, 'forward')
               }
             />
